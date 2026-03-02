@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpeakBand — IELTS Speaking Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0e0c;
+  --cream: #f5f0e8;
+  --gold: #c8962b;
+  --gold-light: #e8b84b;
+  --sage: #4a6741;
+  --rust: #c24b2a;
+  --muted: #7a7570;
+  --card: #faf7f2;
+  --border: rgba(15,14,12,0.1);
+  --shadow: 0 4px 32px rgba(15,14,12,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  text-decoration: none; color: var(--muted);
+  font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink); color: var(--cream) !important;
+  padding: 0.6rem 1.4rem; border-radius: 2px;
+  font-size: 0.8rem !important;
+}
+.nav-cta:hover { background: var(--gold); color: var(--ink) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 8rem 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 55%; height: 100%;
+  background: linear-gradient(135deg, #e8e0d0 0%, #d4c9b0 100%);
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 640px; }
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem; color: var(--gold);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1.05; font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.8rem;
+}
+h1 em { color: var(--gold); font-style: italic; }
+.hero-sub {
+  font-size: 1.1rem; color: var(--muted);
+  line-height: 1.7; max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--ink); color: var(--cream);
+  padding: 1rem 2rem; border-radius: 2px;
+  font-weight: 600; font-size: 0.9rem;
+  text-decoration: none; letter-spacing: 0.02em;
+  transition: all 0.25s; border: 2px solid var(--ink);
+  cursor: pointer;
+}
+.btn-primary:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: transparent; color: var(--ink);
+  padding: 1rem 2rem; border-radius: 2px;
+  font-weight: 600; font-size: 0.9rem;
+  text-decoration: none; letter-spacing: 0.02em;
+  transition: all 0.25s; border: 2px solid var(--ink);
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--ink); color: var(--cream); }
+.hero-stats {
+  position: absolute; right: 3rem; bottom: 4rem;
+  display: flex; gap: 3rem; z-index: 2;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900; color: var(--ink);
+  line-height: 1;
+}
+.stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.3rem; }
+
+/* SECTION COMMONS */
+section { padding: 6rem 3rem; }
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900; letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 520px; margin-bottom: 3.5rem; }
+
+/* QUESTIONS SECTION */
+.questions-section { background: var(--ink); color: var(--cream); }
+.questions-section h2 { color: var(--cream); }
+.questions-section .section-label { color: var(--gold); }
+.questions-section .section-sub { color: rgba(245,240,232,0.6); }
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.q-sidebar {
+  background: rgba(255,255,255,0.04);
+  padding: 1.5rem;
+}
+.q-tab {
+  padding: 1rem 1.2rem;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 0.4rem;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.q-tab:hover { background: rgba(255,255,255,0.06); }
+.q-tab.active { background: rgba(200,150,43,0.15); border-left-color: var(--gold); }
+.q-tab-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
+.q-tab-meta { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(245,240,232,0.4); }
+.q-badge {
+  display: inline-block;
+  background: var(--gold); color: var(--ink);
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.45rem; border-radius: 2px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-left: 0.5rem;
+}
+
+.q-content {
+  background: rgba(255,255,255,0.03);
+  padding: 2rem;
+}
+.q-part-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; color: var(--gold);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.q-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; }
+.q-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.q-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.q-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(200,150,43,0.3); }
+.q-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; color: var(--gold);
+  padding-top: 0.15rem; min-width: 1.5rem;
+}
+.q-text { font-size: 0.9rem; line-height: 1.6; color: rgba(245,240,232,0.85); }
+.q-action { margin-left: auto; opacity: 0; transition: opacity 0.2s; }
+.q-item:hover .q-action { opacity: 1; }
+.q-action svg { width: 16px; height: 16px; stroke: var(--gold); }
+
+/* CHATBOT SECTION */
+.chat-section {
+  background: var(--card);
+  padding: 6rem 3rem;
+}
+.chat-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.chat-info h2 { margin-bottom: 1rem; }
+.chat-features { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2.5rem; }
+.chat-feature {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.2rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.chat-feature-icon {
+  width: 40px; height: 40px; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--ink); color: var(--cream); font-size: 1.1rem; flex-shrink: 0;
+}
+.chat-feature-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.chat-feature-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+/* CHAT WIDGET */
+.chat-widget {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+  height: 580px;
+}
+.chat-header {
+  padding: 1.2rem 1.5rem;
+  background: var(--ink); color: var(--cream);
+  display: flex; align-items: center; gap: 1rem;
+}
+.chat-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700; color: var(--ink);
+  font-family: 'Playfair Display', serif;
+}
+.chat-header-info { flex: 1; }
+.chat-header-name { font-weight: 600; font-size: 0.9rem; }
+.chat-header-status {
+  font-size: 0.72rem; color: rgba(245,240,232,0.6);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.chat-topic-bar {
+  padding: 0.7rem 1.5rem;
+  background: rgba(200,150,43,0.08);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.chat-topic-bar strong { color: var(--ink); }
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg { max-width: 85%; }
+.msg-ai { align-self: flex-start; }
+.msg-user { align-self: flex-end; }
+.msg-bubble {
+  padding: 0.9rem 1.1rem;
+  border-radius: 4px;
+  font-size: 0.875rem; line-height: 1.65;
+}
+.msg-ai .msg-bubble {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 2px;
+}
+.msg-user .msg-bubble {
+  background: var(--ink); color: var(--cream);
+  border-bottom-right-radius: 2px;
+}
+.msg-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; color: var(--muted);
+  margin-top: 0.35rem;
+  padding: 0 0.2rem;
+}
+.msg-user .msg-time { text-align: right; }
+.typing-indicator {
+  display: flex; gap: 4px; align-items: center;
+  padding: 0.9rem 1.1rem;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 4px; border-bottom-left-radius: 2px;
+  width: fit-content;
+}
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted);
+  animation: typingBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.chat-controls {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input-row {
+  display: flex; gap: 0.6rem; align-items: flex-end;
+}
+.chat-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem; resize: none;
+  outline: none; max-height: 100px;
+  line-height: 1.5;
+  transition: border-color 0.2s;
+}
+.chat-input:focus { border-color: var(--gold); }
+.chat-send {
+  background: var(--ink); color: var(--cream);
+  border: none; border-radius: 3px;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+}
+.chat-send:hover { background: var(--gold); color: var(--ink); }
+.chat-send svg { width: 16px; height: 16px; }
+.chat-mic {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 3px; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; flex-shrink: 0; color: var(--muted);
+}
+.chat-mic:hover { border-color: var(--rust); color: var(--rust); }
+.chat-mic.recording { background: var(--rust); color: white; border-color: var(--rust); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(194,75,42,0.4); } 50% { box-shadow: 0 0 0 8px rgba(194,75,42,0); } }
+.chat-hint { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; text-align: center; }
+
+/* EVALUATION SECTION */
+.eval-section { background: white; }
+.eval-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.score-card {
+  background: var(--ink); color: var(--cream);
+  border-radius: 6px; overflow: hidden;
+  padding: 2.5rem;
+}
+.score-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.score-card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+.band-badge {
+  background: var(--gold); color: var(--ink);
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900;
+  width: 70px; height: 70px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.overall-score {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+.overall-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900; color: var(--gold);
+  line-height: 1;
+}
+.overall-label { font-size: 0.75rem; color: rgba(245,240,232,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+.criteria-scores { display: flex; flex-direction: column; gap: 1.2rem; }
+.criterion { }
+.crit-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.crit-name { font-size: 0.8rem; color: rgba(245,240,232,0.75); }
+.crit-score { font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 600; color: var(--gold); }
+.crit-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.crit-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 1s ease;
+}
+
+.eval-feedback {
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.feedback-block {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+}
+.feedback-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.feedback-type.strength { color: var(--sage); }
+.feedback-type.improvement { color: var(--rust); }
+.feedback-type.suggestion { color: var(--gold); }
+.feedback-text { font-size: 0.875rem; line-height: 1.7; color: var(--muted); }
+.feedback-block.strength { border-left: 3px solid var(--sage); }
+.feedback-block.improvement { border-left: 3px solid var(--rust); }
+.feedback-block.suggestion { border-left: 3px solid var(--gold); }
+
+.transcript-box {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--cream);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.transcript-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 0.8rem;
+}
+.transcript-text { font-size: 0.85rem; line-height: 1.8; color: var(--ink); }
+.highlight-vocab { background: rgba(200,150,43,0.15); border-bottom: 1px solid var(--gold); }
+.highlight-grammar-err { background: rgba(194,75,42,0.1); border-bottom: 1px solid var(--rust); }
+
+/* HOW IT WORKS */
+.how-section { background: var(--cream); }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 1rem; }
+.step { position: relative; }
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem; font-weight: 900;
+  color: rgba(15,14,12,0.06); line-height: 1;
+  margin-bottom: -1rem;
+}
+.step-icon {
+  width: 50px; height: 50px;
+  background: var(--ink); color: var(--cream);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 1rem;
+}
+.step-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+.step-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+.step-connector {
+  position: absolute; top: 60px; right: -1rem;
+  width: 2rem; height: 1px; background: var(--border);
+}
+.step:last-child .step-connector { display: none; }
+
+/* FOOTER */
+footer {
+  background: var(--ink); color: var(--cream);
+  padding: 4rem 3rem 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 3rem;
+}
+.footer-brand .logo { display: block; margin-bottom: 1rem; }
+.footer-desc { font-size: 0.85rem; color: rgba(245,240,232,0.5); line-height: 1.7; max-width: 260px; }
+.footer-col-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 1.2rem; }
+.footer-links { display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-links a { font-size: 0.85rem; color: rgba(245,240,232,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.75rem; color: rgba(245,240,232,0.35);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-content > * { animation: fadeUp 0.7s ease both; }
+.hero-eyebrow { animation-delay: 0.1s; }
+h1 { animation-delay: 0.2s; }
+.hero-sub { animation-delay: 0.35s; }
+.hero-actions { animation-delay: 0.5s; }
+
+/* TAB PANELS */
+.q-panel { display: none; }
+.q-panel.active { display: block; }
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(15,14,12,0.85);
+  display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white; border-radius: 6px;
+  padding: 2.5rem; max-width: 540px; width: 90%;
+  position: relative;
+  animation: fadeUp 0.3s ease;
+}
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; color: var(--muted); line-height: 1;
+}
+.modal h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+.modal-q { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+.modal-timer {
+  font-family: 'DM Mono', monospace;
+  font-size: 3rem; font-weight: 500;
+  text-align: center; color: var(--gold);
+  margin: 1.5rem 0;
+}
+.modal-actions { display: flex; gap: 0.8rem; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .hero::before { width: 100%; clip-path: none; top: auto; bottom: 0; height: 30%; opacity: 0.5; }
+  section { padding: 4rem 1.5rem; }
+  .questions-grid, .chat-layout, .eval-layout { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .hero-stats { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Speak<span>Band</span></div>
+  <div class="nav-links">
+    <a href="#questions">Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#evaluation">Evaluation</a>
+    <a href="#how">How It Works</a>
+    <a href="#" class="nav-cta nav-links">Start Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">IELTS Speaking Prep · 2025</div>
+    <h1>Score <em>Band 7+</em><br>With AI Practice</h1>
+    <p class="hero-sub">Practise with real 2025 IELTS speaking questions, get instant AI feedback, and receive detailed band score evaluations across all four criteria.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+        Start Practice Now
+      </button>
+      <a href="#questions" class="btn-secondary">Browse Questions</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">50K+</div>
+      <div class="stat-label">Learners</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Band Improved</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Latest Topics</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUESTIONS SECTION -->
+<section class="questions-section" id="questions">
+  <div class="section-label">Latest 2025 Questions</div>
+  <h2 style="color:var(--cream)">Real Exam Topics,<br>Updated Monthly</h2>
+  <p class="section-sub">Curated from recent IELTS exams worldwide. Every question reflects current trends.</p>
+
+  <div class="questions-grid">
+    <div class="q-sidebar">
+      <div class="q-tab active" onclick="switchTab(0, this)">
+        <div class="q-tab-title">Part 1 — Personal <span class="q-badge">New</span></div>
+        <div class="q-tab-meta">Jan–Mar 2025</div>
+      </div>
+      <div class="q-tab" onclick="switchTab(1, this)">
+        <div class="q-tab-title">Part 2 — Cue Card <span class="q-badge">New</span></div>
+        <div class="q-tab-meta">Jan–Mar 2025</div>
+      </div>
+      <div class="q-tab" onclick="switchTab(2, this)">
+        <div class="q-tab-title">Part 3 — Discussion</div>
+        <div class="q-tab-meta">Oct–Dec 2024</div>
+      </div>
+      <div class="q-tab" onclick="switchTab(3, this)">
+        <div class="q-tab-title">Technology Theme</div>
+        <div class="q-tab-meta">2024–2025</div>
+      </div>
+      <div class="q-tab" onclick="switchTab(4, this)">
+        <div class="q-tab-title">Environment Theme</div>
+        <div class="q-tab-meta">2024–2025</div>
+      </div>
+    </div>
+
+    <div class="q-content">
+      <div class="q-panel active" id="panel-0">
+        <div class="q-part-label">Part 1 · Interview (4–5 minutes)</div>
+        <div class="q-title">Hobbies & Free Time · Jan 2025</div>
+        <ul class="q-list">
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">01</span>
+            <span class="q-text">Do you have any hobbies? How long have you been doing them?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">02</span>
+            <span class="q-text">Do you prefer spending your free time indoors or outdoors? Why?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">03</span>
+            <span class="q-text">Have your hobbies changed since you were a child?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">04</span>
+            <span class="q-text">Is it important for people to have hobbies? Why?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">05</span>
+            <span class="q-text">Are there any hobbies you would like to take up in the future?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+        </ul>
+      </div>
+      <div class="q-panel" id="panel-1">
+        <div class="q-part-label">Part 2 · Long Turn (3–4 minutes)</div>
+        <div class="q-title">Cue Cards · Jan–Mar 2025</div>
+        <ul class="q-list">
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">01</span>
+            <span class="q-text">Describe a time when you used the internet to solve a problem. You should say: what the problem was, how you searched for help, whether the solution worked, and why you remember this experience.</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">02</span>
+            <span class="q-text">Describe a person in your life who has inspired you to be more environmentally conscious.</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">03</span>
+            <span class="q-text">Describe a local business you like visiting. What is it, where is it, why do you enjoy it?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+        </ul>
+      </div>
+      <div class="q-panel" id="panel-2">
+        <div class="q-part-label">Part 3 · Two-Way Discussion (4–5 minutes)</div>
+        <div class="q-title">Society & Change · Oct–Dec 2024</div>
+        <ul class="q-list">
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">01</span>
+            <span class="q-text">How has technology changed the way people socialise compared to 20 years ago?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">02</span>
+            <span class="q-text">Do you think governments should impose stricter environmental regulations on businesses? Why or why not?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">03</span>
+            <span class="q-text">Some people believe that remote work will eventually replace offices entirely. To what extent do you agree?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">04</span>
+            <span class="q-text">What role should education play in addressing social inequality?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+        </ul>
+      </div>
+      <div class="q-panel" id="panel-3">
+        <div class="q-part-label">Theme · Technology (All Parts)</div>
+        <div class="q-title">Technology Questions · 2024–2025</div>
+        <ul class="q-list">
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">01</span>
+            <span class="q-text">How often do you use your smartphone? What do you mainly use it for?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">02</span>
+            <span class="q-text">Describe a piece of technology that has significantly changed your life.</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">03</span>
+            <span class="q-text">Are there any negative effects of relying too heavily on technology in daily life?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+        </ul>
+      </div>
+      <div class="q-panel" id="panel-4">
+        <div class="q-part-label">Theme · Environment (All Parts)</div>
+        <div class="q-title">Environment Questions · 2024–2025</div>
+        <ul class="q-list">
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">01</span>
+            <span class="q-text">Do you try to live in an environmentally friendly way? Give examples.</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">02</span>
+            <span class="q-text">Describe a place in nature that is special to you and explain why it's important to protect it.</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+          <li class="q-item" onclick="openPractice(this)">
+            <span class="q-num">03</span>
+            <span class="q-text">Who is more responsible for protecting the environment — governments, businesses, or individuals?</span>
+            <span class="q-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHATBOT SECTION -->
+<section class="chat-section" id="practice">
+  <div class="chat-layout" style="max-width:1100px;margin:0 auto;">
+    <div class="chat-info">
+      <div class="section-label">AI Speaking Partner</div>
+      <h2>Practise Like a Real Exam</h2>
+      <p class="section-sub">Our AI examiner adapts to your level, asks natural follow-up questions, and keeps the conversation flowing — just like a real IELTS interview.</p>
+      <div class="chat-features">
+        <div class="chat-feature">
+          <div class="chat-feature-icon">🎙️</div>
+          <div>
+            <div class="chat-feature-title">Voice or Text Input</div>
+            <div class="chat-feature-desc">Speak naturally using your microphone, or type your answers. Both modes supported.</div>
+          </div>
+        </div>
+        <div class="chat-feature">
+          <div class="chat-feature-icon">🧠</div>
+          <div>
+            <div class="chat-feature-title">Dynamic Follow-Ups</div>
+            <div class="chat-feature-desc">The AI notices your answers and asks intelligent follow-up questions to deepen the conversation.</div>
+          </div>
+        </div>
+        <div class="chat-feature">
+          <div class="chat-feature-icon">⏱️</div>
+          <div>
+            <div class="chat-feature-title">Timed Response Mode</div>
+            <div class="chat-feature-desc">Practise under exam conditions with real-time countdown timers for each part.</div>
+          </div>
+        </div>
+        <div class="chat-feature">
+          <div class="chat-feature-icon">📊</div>
+          <div>
+            <div class="chat-feature-title">Instant Band Score</div>
+            <div class="chat-feature-desc">After each response, receive a breakdown across fluency, lexis, grammar, and pronunciation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-widget" id="chatWidget">
+      <div class="chat-header">
+        <div class="chat-avatar">E</div>
+        <div class="chat-header-info">
+          <div class="chat-header-name">Emma — AI Examiner</div>
+          <div class="chat-header-status">
+            <span class="status-dot"></span>
+            Live Session · Part 1
+          </div>
+        </div>
+        <button id="ttsBtn" onclick="toggleTTS()" title="Mute Emma" style="background:none;border:none;cursor:pointer;color:rgba(245,240,232,0.7);font-size:1.1rem;padding:0.2rem;">🔊</button>
+      </div>
+      <div class="chat-topic-bar">
+        📌 Current Topic: <strong>Daily Life & Routine</strong> · Tap a question above to change topic
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg msg-ai">
+          <div class="msg-bubble">Hello! I'm Emma, your IELTS speaking examiner today. We'll be practising Part 1 questions. Let's start with something simple — <strong>can you tell me about your typical daily routine?</strong></div>
+          <div class="msg-time">Emma · 10:00</div>
+        </div>
+        <div class="msg msg-user">
+          <div class="msg-bubble">Sure! I usually wake up around 7am and have breakfast before heading to university. My classes start at 9, and I normally finish around 4 in the afternoon. After that, I spend some time studying at the library before going home to cook dinner and relax.</div>
+          <div class="msg-time">You · 10:02</div>
+        </div>
+        <div class="msg msg-ai">
+          <div class="msg-bubble">That sounds like a well-structured day! You mentioned cooking dinner — <strong>do you enjoy cooking, or do you see it more as a necessity?</strong></div>
+          <div class="msg-time">Emma · 10:02</div>
+        </div>
+      </div>
+      <div class="chat-controls">
+        <div class="chat-input-row">
+          <button class="chat-mic" id="micBtn" onclick="toggleMic()" title="Voice input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <textarea class="chat-input" id="chatInput" placeholder="Type your answer..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="chat-send" onclick="sendMessage()" title="Send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+          </button>
+        </div>
+        <div class="chat-hint">🎙️ Hold mic to speak (auto-sends) · ⌨️ Enter to send · 🔊 Toggle Emma's voice</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVALUATION SECTION -->
+<section class="eval-section" id="evaluation">
+  <div class="eval-layout" style="max-width:1100px;margin:0 auto;">
+    <div>
+      <div class="section-label">AI Marking System</div>
+      <h2>Instant Band Score Breakdown</h2>
+      <p class="section-sub">Every response is evaluated against official IELTS criteria. Get actionable feedback to improve your score.</p>
+
+      <div class="score-card">
+        <div class="score-card-header">
+          <div>
+            <div class="score-card-title">Session Score</div>
+            <div style="font-size:0.75rem;color:rgba(245,240,232,0.4);margin-top:0.2rem;font-family:'DM Mono',monospace;">Part 1 · Daily Life Topic</div>
+          </div>
+          <div class="band-badge">7.0</div>
+        </div>
+        <div class="overall-score">
+          <div class="overall-num">7.0</div>
+          <div class="overall-label">Overall Band Score</div>
+        </div>
+        <div class="criteria-scores">
+          <div class="criterion">
+            <div class="crit-row"><span class="crit-name">Fluency & Coherence</span><span class="crit-score">7.0</span></div>
+            <div class="crit-bar"><div class="crit-fill" style="width:78%"></div></div>
+          </div>
+          <div class="criterion">
+            <div class="crit-row"><span class="crit-name">Lexical Resource</span><span class="crit-score">7.5</span></div>
+            <div class="crit-bar"><div class="crit-fill" style="width:83%"></div></div>
+          </div>
+          <div class="criterion">
+            <div class="crit-row"><span class="crit-name">Grammatical Range & Accuracy</span><span class="crit-score">6.5</span></div>
+            <div class="crit-bar"><div class="crit-fill" style="width:72%"></div></div>
+          </div>
+          <div class="criterion">
+            <div class="crit-row"><span class="crit-name">Pronunciation</span><span class="crit-score">7.0</span></div>
+            <div class="crit-bar"><div class="crit-fill" style="width:78%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eval-feedback">
+      <div class="feedback-block strength">
+        <div class="feedback-type strength">✓ Strength</div>
+        <div class="feedback-text">Your response demonstrates good lexical range — the use of "well-structured" and "spend some time studying" shows natural collocation. You maintained a clear narrative structure throughout your answer with appropriate connectives.</div>
+      </div>
+      <div class="feedback-block improvement">
+        <div class="feedback-type improvement">⚠ Grammar to Review</div>
+        <div class="feedback-text">One area to work on: avoid repeating the simple present for all actions ("I wake up... I have... I finish"). Try varying tenses — for example, using the present perfect: "I've been waking up at 7am since I started university." This signals greater grammatical range.</div>
+      </div>
+      <div class="feedback-block suggestion">
+        <div class="feedback-type suggestion">💡 Vocabulary Suggestion</div>
+        <div class="feedback-text">To boost your Lexical Resource score, consider using more precise or idiomatic alternatives: instead of "relax," try "unwind," "decompress," or "switch off." Instead of "cook dinner," try "prepare a home-cooked meal." Small upgrades make a measurable difference.</div>
+      </div>
+
+      <div class="transcript-box">
+        <div class="transcript-label">Annotated Transcript</div>
+        <div class="transcript-text">
+          I usually wake up around 7am and have breakfast before heading to university. My classes start at 9, and I normally finish around 4 in the afternoon. After that, I spend some time <span class="highlight-vocab">studying at the library</span> before going home to <span class="highlight-grammar-err">cook dinner</span> and relax.
+        </div>
+        <div style="display:flex;gap:1.2rem;margin-top:1rem;font-size:0.72rem;color:var(--muted);">
+          <span style="display:flex;align-items:center;gap:0.4rem;"><span style="width:10px;height:10px;background:rgba(200,150,43,0.3);border-bottom:1px solid var(--gold);display:inline-block;"></span>Good vocabulary</span>
+          <span style="display:flex;align-items:center;gap:0.4rem;"><span style="width:10px;height:10px;background:rgba(194,75,42,0.15);border-bottom:1px solid var(--rust);display:inline-block;"></span>Grammar note</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.75rem 1.5rem;" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">Continue Practising</button>
+        <button class="btn-secondary" style="font-size:0.8rem;padding:0.75rem 1.5rem;">Download Report</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label">Process</div>
+    <h2>How SpeakBand Works</h2>
+    <p class="section-sub">Four simple steps from question selection to band score improvement.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Choose a Question</div>
+        <div class="step-desc">Browse our monthly-updated bank of real IELTS speaking topics from Parts 1, 2, and 3.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">💬</div>
+        <div class="step-title">Speak with Emma</div>
+        <div class="step-desc">Engage in a natural conversation with our AI examiner using voice or text. Emma asks real follow-ups.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">📊</div>
+        <div class="step-title">Get Your Score</div>
+        <div class="step-desc">Receive instant band scores across all four IELTS criteria with annotated feedback on your transcript.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚀</div>
+        <div class="step-title">Track Progress</div>
+        <div class="step-desc">Your scores are saved over time. See your improvement chart and identify your weakest areas to focus on.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Speak<span>Band</span></div>
+      <p class="footer-desc">AI-powered IELTS speaking preparation with real exam questions, instant feedback, and detailed band score evaluation.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Practice</div>
+      <div class="footer-links">
+        <a href="#">Part 1 Questions</a>
+        <a href="#">Part 2 Cue Cards</a>
+        <a href="#">Part 3 Discussion</a>
+        <a href="#">Full Mock Test</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Resources</div>
+      <div class="footer-links">
+        <a href="#">Band Score Guide</a>
+        <a href="#">Vocabulary Builder</a>
+        <a href="#">Grammar Tips</a>
+        <a href="#">Sample Answers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <div class="footer-links">
+        <a href="#">How It Works</a>
+        <a href="#">Pricing</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SpeakBand. Not affiliated with British Council or IDP.</span>
+    <span>Made for IELTS learners worldwide 🌍</span>
+  </div>
+</footer>
+
+<!-- PRACTICE MODAL -->
+<div class="modal-overlay" id="practiceModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="section-label" style="margin-bottom:0.5rem;">Quick Practice</div>
+    <h3 id="modalQ">Question</h3>
+    <p class="modal-q" id="modalText"></p>
+    <div class="modal-timer" id="modalTimer">01:00</div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="startTimer()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+        Start Timer
+      </button>
+      <button class="btn-secondary" onclick="practiceInChat()">Open in Chat</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Tab switching ───────────────────────────────────────────────
+function switchTab(idx, el) {
+  document.querySelectorAll('.q-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.q-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + idx).classList.add('active');
+}
+
+// ─── Modal ───────────────────────────────────────────────────────
+let timerInterval, seconds = 60;
+
+function openPractice(el) {
+  const text = el.querySelector('.q-text').textContent;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('practiceModal').classList.add('open');
+  seconds = 60;
+  document.getElementById('modalTimer').textContent = '01:00';
+  clearInterval(timerInterval);
+}
+function closeModal() {
+  document.getElementById('practiceModal').classList.remove('open');
+  clearInterval(timerInterval);
+}
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    seconds--;
+    const m = Math.floor(seconds/60).toString().padStart(2,'0');
+    const s = (seconds%60).toString().padStart(2,'0');
+    document.getElementById('modalTimer').textContent = m+':'+s;
+    if (seconds <= 0) { clearInterval(timerInterval); }
+  }, 1000);
+}
+function practiceInChat() {
+  closeModal();
+  document.getElementById('practice').scrollIntoView({ behavior:'smooth' });
+}
+document.getElementById('practiceModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─── Chat State ──────────────────────────────────────────────────
+let conversationHistory = [];
+const SYSTEM_PROMPT = `You are Emma, a warm but professional IELTS speaking examiner. Your job is to:
+1. Conduct a realistic IELTS speaking interview — ask one question at a time, listen carefully to the student's answer, and ask natural follow-up questions based on what they actually said.
+2. Keep your responses SHORT (1–3 sentences max) — just like a real examiner. Never lecture. Ask, listen, follow up.
+3. After every 3–4 exchanges, offer a brief IELTS band score evaluation in this exact JSON block format (so the UI can parse it), then continue the conversation:
+
+<SCORE>
+{
+  "fluency": 7.0,
+  "lexical": 6.5,
+  "grammar": 7.0,
+  "pronunciation": 7.0,
+  "overall": 6.5,
+  "strength": "One specific strength in 1 sentence.",
+  "improvement": "One specific improvement tip in 1 sentence.",
+  "vocabulary_tip": "One better word/phrase suggestion."
+}
+</SCORE>
+
+Then always ask the next question after the score block.
+Stay in character as Emma throughout. Never break character. Start with a warm greeting and your first Part 1 question.`;
+
+// ─── Anthropic API call ──────────────────────────────────────────
+async function callClaude(userMessage) {
+  conversationHistory.push({ role: 'user', content: userMessage });
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: conversationHistory
+    })
+  });
+
+  const data = await response.json();
+  const reply = data.content[0].text;
+  conversationHistory.push({ role: 'assistant', content: reply });
+  return reply;
+}
+
+// ─── Score parsing & display ─────────────────────────────────────
+function parseAndRenderScore(text) {
+  const match = text.match(/<SCORE>([\s\S]*?)<\/SCORE>/);
+  if (!match) return text;
+
+  let scoreData;
+  try { scoreData = JSON.parse(match[1].trim()); } catch(e) { return text; }
+
+  const cleanText = text.replace(/<SCORE>[\s\S]*?<\/SCORE>/, '').trim();
+
+  // Update the live score card in the evaluation section
+  updateScoreCard(scoreData);
+
+  // Build inline score chip for chat
+  const chip = `<div class="inline-score-chip">
+    <div class="isc-band">Band ${scoreData.overall}</div>
+    <div class="isc-criteria">
+      <span>F&amp;C ${scoreData.fluency}</span>
+      <span>Lex ${scoreData.lexical}</span>
+      <span>Gram ${scoreData.grammar}</span>
+      <span>Pron ${scoreData.pronunciation}</span>
+    </div>
+    <div class="isc-tip">💡 ${scoreData.vocabulary_tip}</div>
+  </div>`;
+
+  return (cleanText ? cleanText + '\n\n' : '') + chip;
+}
+
+function updateScoreCard(s) {
+  // Band badge
+  document.querySelector('.band-badge').textContent = s.overall.toFixed(1);
+  document.querySelector('.overall-num').textContent = s.overall.toFixed(1);
+
+  // Criteria bars
+  const fills = document.querySelectorAll('.crit-fill');
+  const scores = document.querySelectorAll('.crit-score');
+  const vals = [s.fluency, s.lexical, s.grammar, s.pronunciation];
+  vals.forEach((v, i) => {
+    fills[i].style.width = ((v / 9) * 100) + '%';
+    scores[i].textContent = v.toFixed(1);
+  });
+
+  // Feedback blocks
+  const fbs = document.querySelectorAll('.feedback-text');
+  if (fbs[0]) fbs[0].textContent = s.strength;
+  if (fbs[1]) fbs[1].textContent = s.improvement;
+  if (fbs[2]) fbs[2].textContent = s.vocabulary_tip;
+}
+
+// ─── Render message ──────────────────────────────────────────────
+function appendMessage(role, htmlContent) {
+  const msgs = document.getElementById('chatMessages');
+  const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const div = document.createElement('div');
+  div.className = `msg msg-${role === 'ai' ? 'ai' : 'user'}`;
+  const name = role === 'ai' ? 'Emma' : 'You';
+  div.innerHTML = `<div class="msg-bubble">${htmlContent}</div><div class="msg-time">${name} · ${now}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg msg-ai';
+  div.id = 'typingIndicator';
+  div.innerHTML = `<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+// ─── Send message ────────────────────────────────────────────────
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || isSending) return;
+
+  isSending = true;
+  setSendingState(true);
+  appendMessage('user', escapeHtml(text));
+  input.value = '';
+  input.style.height = 'auto';
+
+  appendTyping();
+  try {
+    const reply = await callClaude(text);
+    removeTyping();
+    const rendered = parseAndRenderScore(reply);
+    appendMessage('ai', formatAIText(rendered));
+  } catch(err) {
+    removeTyping();
+    appendMessage('ai', '<em style="color:var(--rust)">Connection error. Please try again.</em>');
+  }
+  isSending = false;
+  setSendingState(false);
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+function formatAIText(t) {
+  // Bold **text**, preserve inline-score-chip HTML, line breaks
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'<').replace(/>/g,'>') // already raw HTML from chip
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+}
+
+// Actually we need to NOT escape the chip HTML — let's do it properly:
+function renderAIMessage(raw) {
+  // Extract chip if present
+  const chipMatch = raw.match(/<div class="inline-score-chip">[\s\S]*?<\/div>\s*<\/div>/);
+  if (chipMatch) {
+    const chip = chipMatch[0];
+    const before = raw.slice(0, raw.indexOf(chip)).trim();
+    const after = raw.slice(raw.indexOf(chip) + chip.length).trim();
+    let html = '';
+    if (before) html += escapeHtml(before).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>') + '<br><br>';
+    html += chip;
+    if (after) html += '<br><br>' + escapeHtml(after).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    return html;
+  }
+  return escapeHtml(raw).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+}
+
+// Patch sendMessage to use renderAIMessage
+let isSending = false;
+function setSendingState(s) {
+  document.getElementById('chatInput').disabled = s;
+  document.querySelector('.chat-send').disabled = s;
+}
+
+// Override sendMessage properly
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || isSending) return;
+  isSending = true;
+  setSendingState(true);
+
+  appendMessage('user', text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'));
+  input.value = '';
+  input.style.height = 'auto';
+  appendTyping();
+
+  try {
+    const raw = await callClaude(text);
+    removeTyping();
+    const processed = parseAndRenderScore(raw);
+    const msgs = document.getElementById('chatMessages');
+    const now = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    const div = document.createElement('div');
+    div.className = 'msg msg-ai';
+    div.innerHTML = `<div class="msg-bubble">${renderAIMessage(processed)}</div><div class="msg-time">Emma · ${now}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // TTS
+    if (window.speechSynthesis) {
+      const plainText = raw.replace(/<SCORE>[\s\S]*?<\/SCORE>/g,'').replace(/<[^>]+>/g,'').trim();
+      speakText(plainText);
+    }
+  } catch(err) {
+    removeTyping();
+    const now = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'msg msg-ai';
+    div.innerHTML = `<div class="msg-bubble" style="color:var(--rust)">Connection issue — please check your internet and try again.</div><div class="msg-time">Emma · ${now}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  isSending = false;
+  setSendingState(false);
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+// ─── Text-to-Speech ──────────────────────────────────────────────
+let ttsEnabled = true;
+function speakText(text) {
+  if (!ttsEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.92;
+  utter.pitch = 1.05;
+  // Prefer a female English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+    || voices.find(v => v.lang.startsWith('en-GB'))
+    || voices.find(v => v.lang.startsWith('en'));
+  if (preferred) utter.voice = preferred;
+  window.speechSynthesis.speak(utter);
+}
+
+// ─── Speech Recognition ──────────────────────────────────────────
+let recognition = null;
+let isRecording = false;
+let finalTranscript = '';
+
+function initSpeechRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return null;
+  const r = new SpeechRecognition();
+  r.continuous = true;
+  r.interimResults = true;
+  r.lang = 'en-US';
+
+  r.onresult = (e) => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) finalTranscript += e.results[i][0].transcript + ' ';
+      else interim += e.results[i][0].transcript;
+    }
+    const input = document.getElementById('chatInput');
+    input.value = (finalTranscript + interim).trim();
+    autoResize(input);
+    updateMicLabel(finalTranscript + interim);
+  };
+
+  r.onerror = (e) => {
+    console.warn('Speech error:', e.error);
+    if (e.error === 'not-allowed') {
+      showMicError('Microphone access denied. Please allow mic in your browser settings.');
+    }
+    stopRecording();
+  };
+
+  r.onend = () => {
+    if (isRecording) r.start(); // keep going
+  };
+
+  return r;
+}
+
+function updateMicLabel(text) {
+  const micBtn = document.getElementById('micBtn');
+  const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+  const label = micBtn.querySelector('.mic-word-count');
+  if (label) label.textContent = wordCount > 0 ? `${wordCount} words` : 'Listening…';
+}
+
+function showMicError(msg) {
+  const bar = document.querySelector('.chat-topic-bar');
+  bar.innerHTML = `⚠️ ${msg}`;
+  bar.style.background = 'rgba(194,75,42,0.1)';
+  setTimeout(() => {
+    bar.style.background = '';
+    bar.innerHTML = `📌 Current Topic: <strong>Daily Life &amp; Routine</strong> · Tap a question above to change topic`;
+  }, 4000);
+}
+
+function toggleMic() {
+  if (!isRecording) startRecording();
+  else stopRecording();
+}
+
+function startRecording() {
+  if (!recognition) recognition = initSpeechRecognition();
+  if (!recognition) { showMicError('Speech recognition not supported. Try Chrome or Edge.'); return; }
+
+  // Stop TTS so mic doesn't pick it up
+  window.speechSynthesis && window.speechSynthesis.cancel();
+
+  finalTranscript = '';
+  document.getElementById('chatInput').value = '';
+  isRecording = true;
+
+  const micBtn = document.getElementById('micBtn');
+  micBtn.classList.add('recording');
+  micBtn.innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" fill="none" stroke-width="2"/><line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="mic-word-count" style="font-size:0.6rem;margin-left:2px">Listening…</span>
+  `;
+  micBtn.title = 'Click to stop recording';
+
+  // Pulse the chat input border
+  document.getElementById('chatInput').style.borderColor = 'var(--rust)';
+
+  try { recognition.start(); } catch(e) { /* already started */ }
+}
+
+function stopRecording() {
+  isRecording = false;
+  if (recognition) { try { recognition.stop(); } catch(e){} }
+
+  const micBtn = document.getElementById('micBtn');
+  micBtn.classList.remove('recording');
+  micBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+  micBtn.title = 'Voice input';
+  document.getElementById('chatInput').style.borderColor = '';
+
+  // If there's a transcript, auto-send
+  const input = document.getElementById('chatInput');
+  const trimmed = input.value.trim();
+  if (trimmed.length > 3) {
+    setTimeout(() => sendMessage(), 300);
+  }
+}
+
+// ─── TTS Toggle button ───────────────────────────────────────────
+function toggleTTS() {
+  ttsEnabled = !ttsEnabled;
+  const btn = document.getElementById('ttsBtn');
+  btn.title = ttsEnabled ? 'Mute Emma' : 'Unmute Emma';
+  btn.style.opacity = ttsEnabled ? '1' : '0.4';
+  if (!ttsEnabled) window.speechSynthesis && window.speechSynthesis.cancel();
+}
+
+// ─── Init: start conversation ────────────────────────────────────
+async function initConversation() {
+  // Clear placeholder messages
+  document.getElementById('chatMessages').innerHTML = '';
+  appendTyping();
+  try {
+    const greeting = await callClaude('Hello, I am ready to start my IELTS speaking practice.');
+    removeTyping();
+    const msgs = document.getElementById('chatMessages');
+    const now = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    const div = document.createElement('div');
+    div.className = 'msg msg-ai';
+    div.innerHTML = `<div class="msg-bubble">${greeting.replace(/\n/g,'<br>')}</div><div class="msg-time">Emma · ${now}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    speakText(greeting);
+  } catch(e) {
+    removeTyping();
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'msg msg-ai';
+    div.innerHTML = `<div class="msg-bubble">Hello! I'm Emma, your IELTS speaking examiner. <strong>Can you tell me about your daily routine?</strong></div><div class="msg-time">Emma · now</div>`;
+    msgs.appendChild(div);
+  }
+}
+
+// Load voices async (Chrome needs this)
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
+
+// Auto-init on load
+window.addEventListener('load', () => {
+  initConversation();
+});
+</script>
+
+<style>
+/* Inline score chip */
+.inline-score-chip {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  margin-top: 0.5rem;
+  border-left: 3px solid var(--gold);
+}
+.isc-band {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 900;
+  color: var(--gold); margin-bottom: 0.5rem;
+}
+.isc-criteria {
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; color: rgba(245,240,232,0.7);
+  margin-bottom: 0.5rem;
+}
+.isc-criteria span {
+  background: rgba(255,255,255,0.08);
+  padding: 0.2rem 0.5rem; border-radius: 2px;
+}
+.isc-tip {
+  font-size: 0.78rem; color: rgba(245,240,232,0.65); line-height: 1.5;
+}
+/* Recording pulse on input */
+@keyframes borderPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(194,75,42,0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(194,75,42,0); }
+}
+.chat-input:focus[style*="rust"] { animation: borderPulse 1.5s infinite; }
+/* Live transcript hint */
+.chat-hint { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; text-align: center; }
+</style>
+</body>
+</html>
